@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GOU Project Defense System - Luxurious Edition</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;500&display=swap');
+
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+      transition: all 0.4s ease;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e1b18, #3c2f23);
+      color: #f0e6d2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      user-select: none;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0.04em;
+      max-width: 900px;
+      line-height: 1.4;
+      color: #d4af37;
+      text-shadow: 0 0 8px #d4af37cc;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-weight: 300;
+      font-size: 1.2rem;
+      opacity: 0.85;
+      font-style: italic;
+    }
+
+    /* Form Container */
+    form {
+      background: #2c251fdd;
+      padding: 35px 40px 40px 40px;
+      border-radius: 20px;
+      box-shadow:
+        0 4px 15px rgba(212,175,55,0.5),
+        inset 0 0 20px #d4af37bb;
+      max-width: 700px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      border: 1px solid #d4af37aa;
+    }
+
+    /* Floating Labels */
+    .form-group {
+      position: relative;
+      margin-top: 30px;
+    }
+    label {
+      position: absolute;
+      left: 18px;
+      top: 14px;
+      color: #d4af37cc;
+      font-weight: 500;
+      font-size: 1rem;
+      pointer-events: none;
+      background: transparent;
+      transition: 0.3s ease all;
+      text-shadow: 0 0 3px #d4af37aa;
+    }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      background: transparent;
+      border: 2px solid #d4af37bb;
+      color: #f0e6d2;
+      font-size: 1.1rem;
+      padding: 16px 18px 16px 18px;
+      border-radius: 12px;
+      outline: none;
+      resize: vertical;
+      min-height: 80px;
+      font-family: 'Poppins', sans-serif;
+      box-shadow:
+        inset 0 0 8px #d4af37aa;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: #ffd700;
+      box-shadow: 0 0 15px #ffd700;
+    }
+    input[type="text"]:focus + label,
+    textarea:focus + label,
+    input[type="text"]:not(:placeholder-shown) + label,
+    textarea:not(:placeholder-shown) + label {
+      top: -12px;
+      left: 16px;
+      font-size: 0.85rem;
+      color: #ffd700;
+      text-shadow: 0 0 10px #ffd700;
+      background: #2c251fdd;
+      padding: 0 6px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    button {
+      margin-top: 40px;
+      width: 100%;
+      background: linear-gradient(90deg, #d4af37, #ffd700);
+      color: #3c2f23;
+      font-weight: 700;
+      font-size: 1.3rem;
+      padding: 18px;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #d4af37cc;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      filter: drop-shadow(0 0 8px #d4af37cc);
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #ffd700, #d4af37);
+      color: #1e1b18;
+      filter: drop-shadow(0 0 15px #ffd700);
+    }
+    button:active {
+      transform: scale(0.97);
+    }
+
+    /* Feedback Section */
+    #feedback {
+      max-width: 700px;
+      margin-top: 40px;
+      background: #1f1910dd;
+      border-radius: 20px;
+      padding: 30px 35px;
+      color: #f0e6d2;
+      box-shadow: 0 0 20px #d4af37aa;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      font-weight: 500;
+      user-select: text;
+    }
+    #feedback h2 {
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      letter-spacing: 0.06em;
+      color: #ffd700;
+      text-shadow: 0 0 12px #ffd700;
+    }
+    .comment {
+      margin: 15px 0;
+      padding: 18px 20px;
+      border-radius: 15px;
+      box-shadow: inset 0 0 10px rgba(212,175,55,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s forwards;
+    }
+    .positive {
+      background: #243514bb;
+      border-left: 8px solid #7cc576;
+      color: #b9e4ac;
+      text-shadow: 0 0 5px #7cc576bb;
+    }
+    .negative {
+      background: #4b1b1bbb;
+      border-left: 8px solid #e36262;
+      color: #f9b5b5;
+      text-shadow: 0 0 5px #e36262bb;
+    }
+    hr {
+      border: 0;
+      border-top: 1px solid #d4af3744;
+      margin: 25px 0 20px;
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #d4af3744;
+      text-align: center;
+      user-select: none;
+      letter-spacing: 0.05em;
+      font-style: italic;
+    }
+
+    /* Scrollbar for textarea */
+    textarea::-webkit-scrollbar {
+      width: 8px;
+    }
+    textarea::-webkit-scrollbar-track {
+      background: #2c251f44;
+      border-radius: 12px;
+    }
+    textarea::-webkit-scrollbar-thumb {
+      background: #d4af37aa;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 768px) {
+      form {
+        padding: 30px 25px 35px 25px;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      #feedback {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Godfrey Okoye University</h1>
+  <p>400 Level Project Defense System - AI Lecturer Examination</p>
+</header>
+
+<form id="projectForm" autocomplete="off" spellcheck="false" novalidate>
+  <div class="form-group">
+    <input type="text" id="title" name="title" placeholder=" " required minlength="10" />
+    <label for="title">Project Title</label>
+  </div>
+
+  <div class="form-group">
+    <textarea id="abstract" name="abstract" placeholder=" " required minlength="50"></textarea>
+    <label for="abstract">Abstract</label>
+  </div>
+
+  <div class="form-group">
+    <textarea id="objectives" name="objectives" placeholder=" " required minlength="50"></textarea>
+    <label for="objectives">Objectives</label>
+  </div>
+
+  <div class="form-group">
+    <textarea id="methodology" name="methodology" placeholder=" " required minlength="50"></textarea>
+    <label for="methodology">Methodology</label>
+  </div>
+
+  <div class="form-group">
+    <textarea id="results" name="results" placeholder=" " required minlength="50"></textarea>
+    <label for="results">Results</label>
+  </div>
+
+  <div class="form-group">
+    <textarea id="conclusion" name="conclusion" placeholder=" " required minlength="50"></textarea>
+    <label for="conclusion">Conclusion</label>
+  </div>
+
+  <button type="submit" aria-label="Submit project for AI examination">Submit for AI Examination</button>
+</form>
+
+<section id="feedback" aria-live="polite" style="display:none;">
+  <h2>AI Lecturer Feedback</h2>
+  <div id="comments"></div>
+</section>
+
+<footer>
+  &copy; 2025 Godfrey Okoye University Project Defense System. By.: Okoronkwo David.
+</footer>
+
+<script>
+  const form = document.getElementById('projectForm');
+  const feedbackSection = document.getElementById('feedback');
+  const commentsDiv = document.getElementById('comments');
+
+  // Keywords for simulating AI analysis
+  const keywords = ['research', 'analysis', 'data', 'method', 'result', 'study', 'objective', 'conclude', 'significant', 'findings', 'hypothesis', 'evaluation', 'experiment', 'scope', 'limitations'];
+
+  function analyzeText(text) {
+    const length = text.trim().length;
+    let score = 0;
+    let issues = [];
+
+    if (length < 50) {
+      issues.push('The section seems too short; consider elaborating more.');
+    } else {
+      score += 1;
+    }
+
+    const foundKeyword = keywords.some(k => text.toLowerCase().includes(k));
+    if (!foundKeyword) {
+      issues.push('Try to include academic keywords relevant to your section for clarity.');
+    } else {
+      score += 1;
+    }
+
+    return {score, issues};
+  }
+
+  function generateFeedback(sectionName, text) {
+    let feedback = [];
+    if (text.trim() === '') {
+      feedback.push({type:'negative', text: `${sectionName} is empty. This section is critical.`});
+      return feedback;
+    }
+
+    const analysis = analyzeText(text);
+
+    if (analysis.score === 2) {
+      feedback.push({type:'positive', text: `${sectionName} looks well written and detailed.`});
+    } else {
+      feedback.push(...analysis.issues.map(issue => ({type:'negative', text: `${sectionName} issue: ${issue}`})));
+    }
+
+    return feedback;
+  }
+
+  // Animate comments one by one with delay for smooth reveal
+  function displayComments(feedbacks) {
+    commentsDiv.innerHTML = '';
+    feedbacks.forEach((fb, i) => {
+      const div = document.createElement('div');
+      div.classList.add('comment', fb.type);
+      div.textContent = fb.text;
+      div.style.animationDelay = `${i * 0.3}s`;
+      commentsDiv.appendChild(div);
+    });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    feedbackSection.style.display = 'block';
+
+    // Grab values
+    const title = form.title.value.trim();
+    const abstract = form.abstract.value.trim();
+    const objectives = form.objectives.value.trim();
+    const methodology = form.methodology.value.trim();
+    const results = form.results.value.trim();
+    const conclusion = form.conclusion.value.trim();
+
+    let feedbacks = [];
+
+    // Title check
+    if(title.length < 10){
+      feedbacks.push({type:'negative', text: 'Project Title is too short. Try to be descriptive.'});
+    } else {
+      feedbacks.push({type:'positive', text: 'Project Title looks good.'});
+    }
+
+    // Analyze each section and append feedback
+    const sections = [
+      {name:'Abstract', content: abstract},
+      {name:'Objectives', content: objectives},
+      {name:'Methodology', content: methodology},
+      {name:'Results', content: results},
+      {name:'Conclusion', content: conclusion}
+    ];
+
+    let totalScore = 0;
+    sections.forEach(sec => {
+      let sectionFeedbacks = generateFeedback(sec.name, sec.content);
+      sectionFeedbacks.forEach(fb => {
+        feedbacks.push(fb);
+        if(fb.type === 'positive') totalScore++;
+      });
+    });
+
+    // Final overall feedback
+    feedbacks.push({type:'neutral', text: '--------------------------------------'});
+
+    if(totalScore >= 9){
+      feedbacks.push({type:'positive', text: '✨ Excellent work! Your project defense preparation is outstanding and ready to impress the lecturers. ✨'});
+    } else if(totalScore >= 6){
+      feedbacks.push({type:'positive', text: '👍 Good job! Your project defense is solid, but improving some sections will help you shine even more.'});
+    } else {
+      feedbacks.push({type:'negative', text: '⚠️ You need to work harder on your project defense. Ensure all sections are detailed and clear to impress your lecturers.'});
+    }
+
+    // Display comments with animation
+    displayComments(feedbacks);
+    // Scroll feedback into view smoothly
+    feedbackSection.scrollIntoView({behavior: 'smooth'});
+  });
+</script>
+
+</body>
+</html>
